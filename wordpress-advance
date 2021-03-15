@@ -1,0 +1,56 @@
+/****   IN function file use this    ****/
+
+
+for ($i=1; $i <= 3; $i++) { 
+	add1_post_type($i);
+}
+//Custom 3 add products
+function add1_post_type($i) {
+	$labels = array(
+		'name'                => _x( 'add'.$i, 'Post Type General Name', 'wordpress' ),
+		'singular_name'       => _x( 'add'.$i, 'Post Type Singular Name', 'wordpress' ),
+		'add1_name'       => __( 'add', 'wordpress' ),
+		'parent_item_colon'   => __( 'Parent add'.$i, 'wordpress' ),
+		'all_items'           => __( 'All add'.$i, 'wordpress' ),
+		'view_item'           => __( 'View add'.$i, 'wordpress' ),
+		'add_new_item'        => __( 'Add New add'.$i, 'wordpress' ),
+		'add_new'             => __( 'Add New', 'wordpress' ),
+		'edit_item'           => __( 'Edit add'.$i, 'wordpress' ),
+		'update_item'         => __( 'Update add'.$i, 'wordpress' ),
+		'search_items'        => __( 'Search add'.$i, 'wordpress' ),
+		'not_found'           => __( 'Not Found', 'wordpress' ),
+		'not_found_in_trash'  => __( 'Not found in Trash', 'wordpress' ),
+	);
+	$args = array(
+		'label'               => __( 'add'.$i, 'wordpress' ),
+		'description'         => __( 'add'.$i,'news and reviews', 'wordpress' ),
+		'labels'              => $labels,
+		'supports'            => array( 'title', 'editor' , 'excerpt' , 'author' , 'thumbnail', 'custom-fields' , ),
+		'taxonomies'          => array( 'genres' ),	
+		'hierarchical'        => false,
+		'public'              => true,
+		'show_ui'             => true,
+		'show_in_add'.$i       => true,
+		'show_in_nav_add'.$i  => true,
+		'show_in_admin_bar'   => true,
+		'show_in_menu'        => true,
+		'add'.$i.'position'      => 5,
+		'can_export'          => true,
+		'has_archive'         => true,
+		'exclude_from_search' => false,
+		'publicly_queryable'  => true,
+		'capability_type'     => 'page',
+		'taxonomies'          => array( 'category' ),
+	);
+	register_post_type( 'add'.$i, $args );
+	
+}
+add_action( 'init', 'add1_post_type');
+
+
+/*** IN template files use this ***/
+
+
+<?php  $posts = new WP_Query( array( 'post_type' => 'add1' , 'order' => 'ASC' ) );
+while($posts->have_posts()) : $posts->the_post();?>
+<?php endwhile; ?>
